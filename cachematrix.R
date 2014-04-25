@@ -6,10 +6,13 @@
 ## and write comments above each line of code.
 ## It's not the pretiest style, but it's gonna
 ## make the code much easier to understand for
-## me and evaluators.
+## myself and evaluators.
 
-## First function makeCacheMatrix creates a list of functions 
-## other functions can use to cache matrix inverse.
+## First function makeCacheMatrix takes a inversible square matrix 
+## as it's input and give's out list of 4 functions. Other functions
+## can use this list to cache matrix inversion.
+## For example "a <- makeCacheMatrix(matrix(rnorm(100), 10, 10))" 
+## creates a list of functions for this 10x10 matrix with random values.  
 
 makeCacheMatrix <- function(x = matrix()) {
   ## Create a variable i, which stores the matrix inverse
@@ -40,10 +43,14 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## This function calculates the matrix inverse of matrix x
-## and uses getCacheMatrix function to store the inverse. 
-## It uses getCacheMatrix function also to get stored inverse,
-## if it has already been calculated.
+## The second function takes a list of functions created 
+## with makeCacheMatrix as it's input and print's out inverse 
+## of the matrix.
+## If we follow example given in comments above makeCacheMatrix,
+## we can write "cacheSolve(a)" to get inverse of this 10x10 matrix 
+## assigned to mtx.
+## This function is useful in loops where inverse of big matrixes 
+## would otherwise be calculated multiple times.
 
 cacheSolve <- function(x, ...) {
   ## get the value of inverse stored in the cache
@@ -60,6 +67,8 @@ cacheSolve <- function(x, ...) {
   ## First get the cached matrix and assign it's
   ## value to data-variable
   data <- x$get()
+  ## tell user to calculate inverse
+  message("calculating matrix inversion")
   ## calculate the inverse of matrix assigned to 
   ## data and assign it to i. ...
   i <- solve(data, ...)
